@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<button @click="say('hi',$event)">greet</button>
+		<a href="www.baidu.com" @click.prevent="say('hi')">a</a>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script>
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				name:"vue.js"
+			},
+			methods:{
+				greet:function(event){
+					alert(this.name);
+					alert(event.target.tagName);
+				},
+				say:function(msg,event){
+					event.preventDefault();
+					alert(msg);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

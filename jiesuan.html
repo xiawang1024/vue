@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app" class="panel panel-primary">
+		<div class="panel-heading">结算 <span class="glyphicon glyphicon-shopping-cart"></span></div>
+		<div class="panel-body">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th v-for="th of theads">{{th.th}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td v-for="item of prices">{{item}}</td>
+					</tr>
+					<tr>
+						<td>
+							<button class="btn pull-left btn-sm btn-info" @click="jia">+</button>
+							<button class="btn pull-right btn-sm btn-info" @click="jian">-</button>
+						</td>
+						<td>
+							<input type="text" v-model="prices.danjia" @keyup.enter="dj">
+						</td>
+						<td>
+							<input type="text" name="" v-model="selected" @keyup.enter="zk">
+							<select v-model="selected" >
+								<option v-for="item of zhekou">{{item}}</option>
+							</select>
+							<span class="text-left glyphicon glyphicon-bullhorn"> 打折</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				shuliang:0,
+				danjia:10,
+				zongjia:0,
+				theads:[
+					{th:"数量"},
+					{th:"单价（元）"},
+					{th:"总价（元）"}
+				],
+				prices:{
+					shuliang:0,
+					danjia:10,
+					zongjia:0,
+				},
+				zhekou:{
+					zk10:1,
+					zk095:0.95,
+					zk09:0.9,
+					zk08:0.8
+				},
+				selected:1
+			},
+			methods:{
+				jia:function(){
+					this.prices.shuliang++;
+					this.prices.zongjia=this.prices.shuliang*this.prices.danjia;
+				},
+				jian:function(){
+					this.prices.shuliang--;
+					if(this.prices.shuliang<0){
+						this.prices.shuliang=0;
+					}
+					this.prices.zongjia=this.prices.shuliang*this.prices.danjia;
+				},
+				dj:function(){
+					this.prices.zongjia=this.prices.shuliang*this.prices.danjia;
+				},
+				zk:function(){
+					this.prices.zongjia=this.prices.danjia*this.prices.shuliang;
+					this.prices.zongjia*=this.selected;
+				}
+			},
+			watch:{
+				"selected":function(to,from){
+					this.prices.zongjia=this.prices.danjia*this.prices.shuliang;//zongjia切换保持原来不变
+					this.prices.zongjia*=to;
+				},
+				//数量，单价变化时，折扣初始化为1
+				"prices.danjia":function(){
+					this.selected=1;
+				},
+				"prices.shuliang":function(){
+					this.selected=1;
+				}
+			}
+		});
+		// vm.$watch('prices', function() {
+		// 	this.selected=1;	
+		// 		}, {
+		//   deep: true
+		// });
+		$(function(){
+			$(":input").css({
+				"width":"60px",
+				"height":28
+			});
+		})
+	</script>
+</body>
+</html>
