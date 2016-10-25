@@ -7,20 +7,25 @@
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="vue.js"></script>
+	<style type="text/css">
+		.panel-body th{
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 	<div id="book">
 		<div class="panel panel-primary">
-			<div class="panel-heading">书架</div>
+			<div class="panel-heading">我的书架</div>
 			<div class="panel-body">
 				<table class="table table-hover table-responsive">
 					<thead>
 						<tr>
-							<th v-for="hd of heads" v-text="hd.th"></th>
+							<th v-for="hd of heads" v-html="hd.th" @click="sortBy(hd.sort)"></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="book of books">
+						<tr v-for="book of books | orderBy sortKey">
 							<td v-text="book.id"></td>
 							<td v-text="book.name"></td>
 							<td v-text="book.author"></td>
@@ -28,6 +33,12 @@
 							<td><button class="btn btn-danger btn-sm" @click="removeBook($index)">删除</button></td>
 						</tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td>总价：</td>
+							<td colspan="4" v-text="sum"></td><!-- 总价 -->
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
@@ -60,11 +71,11 @@
 			el:"#book",
 			data:{
 				heads:[
-				{th:'序号'},
-				{th:'书名'},
-				{th:'作者'},
-				{th:'价格'},
-				{th:'操作'}
+				{th:'序号 <span class="glyphicon glyphicon-sort"></span>',sort:'id'},
+				{th:'书名 <span class="glyphicon glyphicon-sort"></span>',sort:'name'},
+				{th:'作者 <span class="glyphicon glyphicon-sort"></span>',sort:'author'},
+				{th:'价格 <span class="glyphicon glyphicon-sort"></span>',sort:'price'},
+				{th:'操作',sort:''}
 				],
 				book:{
 					id:0,
@@ -97,8 +108,9 @@
 					author:'吴承恩',
 					price:'20.0'
 				}
-				]
-				
+				],
+				sortKey:"",//排序关键字
+				sum:0//总价
 			},
 			methods:{
 				addBook:function(){
@@ -116,6 +128,19 @@
 				},
 				removeBook:function(index){
 					this.books.splice(index,1);
+				},
+				sortBy:function(sortKey){
+					this.sortKey=sortKey;
+				}
+			},
+			computed:{
+				sum:function(){
+					var len=this.books.length,
+						result=0;
+					for(var i=0;i<len;i++){
+						result+=Number(this.books[i].price);
+					}
+					return result;
 				}
 			}
 		});
