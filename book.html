@@ -11,9 +11,9 @@
 <body>
 	<div id="book">
 		<div class="panel panel-primary">
-			<div class="panel-heading">Book</div>
+			<div class="panel-heading">书架</div>
 			<div class="panel-body">
-				<table class="table">
+				<table class="table table-hover table-responsive">
 					<thead>
 						<tr>
 							<th v-for="hd of heads" v-text="hd.th"></th>
@@ -48,7 +48,7 @@
 						<input type="text" class="form-control" v-model="book.price">
 					</div>
 				</form>
-				<button class="btn btn-success" @click="addBook">添加</button>
+				<button class="btn btn-success btn-block" @click="addBook">添加</button>
 			</div>
 		</div>
 		<p>
@@ -103,7 +103,10 @@
 			methods:{
 				addBook:function(){
 					this.book.id=this.books.length+1;
-					this.books.push(this.book);
+					//书名，作者，价格不为空
+					if(this.book.name&&this.book.author&&this.book.price){
+						this.books.push(this.book);
+					}
 					this.book={
 								id:0,
 								name:'',
