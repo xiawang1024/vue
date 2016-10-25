@@ -9,18 +9,113 @@
 	<script type="text/javascript" src="vue.js"></script>
 </head>
 <body>
-	<div class="panel panel-primary">
-		<div class="panel-heading">Book</div>
-		<div class="panel-body">
-			<table class="table">
-				<thead>
-					<tr>
-						<th v-for=""></th>
-					</tr>
-				</thead>
-				<tbody></tbody>
-			</table>
+	<div id="book">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Book</div>
+			<div class="panel-body">
+				<table class="table">
+					<thead>
+						<tr>
+							<th v-for="hd of heads" v-text="hd.th"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="book of books">
+							<td v-text="book.id"></td>
+							<td v-text="book.name"></td>
+							<td v-text="book.author"></td>
+							<td v-text="book.price"></td>
+							<td><button class="btn btn-danger btn-sm" @click="removeBook($index)">删除</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		<div class="panel panel-primary">
+			<div class="panel-heading">添加书籍</div>
+			<div class="panel-body">
+				<form role='form'>
+					<div class="form-group">
+						<label>书名</label>
+						<input type="text" class="form-control" v-model="book.name">
+					</div>
+					<div class="form-group">
+						<label>作者</label>
+						<input type="text" class="form-control" v-model="book.author">
+					</div>
+					<div class="form-group">
+						<label>价格</label>
+						<input type="text" class="form-control" v-model="book.price">
+					</div>
+				</form>
+				<button class="btn btn-success" @click="addBook">添加</button>
+			</div>
+		</div>
+		<p>
+			<span v-for='item of book'></span>
+		</p>
 	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#book",
+			data:{
+				heads:[
+				{th:'序号'},
+				{th:'书名'},
+				{th:'作者'},
+				{th:'价格'},
+				{th:'操作'}
+				],
+				book:{
+					id:0,
+					name:'',
+					author:'',
+					price:''
+				},
+				books:[
+				{
+					id:1,
+					name:'红楼梦',
+					author:'曹雪芹',
+					price:'32.0'
+				},
+				{
+					id:2,
+					name:'水浒传',
+					author:'施耐庵',
+					price:'30.0'
+				},
+				{
+					id:3,
+					name:'三国演义',
+					author:'罗贯中',
+					price:'24.0'
+				},
+				{
+					id:4,
+					name:'西游记',
+					author:'吴承恩',
+					price:'20.0'
+				}
+				]
+				
+			},
+			methods:{
+				addBook:function(){
+					this.book.id=this.books.length+1;
+					this.books.push(this.book);
+					this.book={
+								id:0,
+								name:'',
+								author:'',
+								price:''
+							};
+				},
+				removeBook:function(index){
+					this.books.splice(index,1);
+				}
+			}
+		});
+	</script>
 </body>
 </html>
