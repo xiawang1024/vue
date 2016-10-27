@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-component></my-component>
+		<second-cmpt></second-cmpt>
+		<div>
+			<count></count>
+			<count></count>
+			<count></count>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Vue.component("my-component",{//全局注册组件
+			template:"<div>一个组件</div>"
+		});
+		var child={
+			template:"<div>我是局部注册组件</div>"
+		}
+		var data={
+			counter:0
+		};
+		Vue.component('count',{
+			template:"<button @click='counter++'>{{counter}}</button>",
+			data:function(){
+				return {counter:0};
+			}
+		});
+		var vm=new Vue({
+			el:"#app",
+			components:{
+				"second-cmpt":child
+			}
+		});
+	</script>
+</body>
+</html>
