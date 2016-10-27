@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+	<style type="text/css">
+		span{
+			display: inline-block;
+			background-color: silver;
+			margin-left: 8px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="todoNewTxt" placeholder="addTodo" @keyup.13="addTodo">
+		<ul>
+			<li v-for="todo of todos">{{todo}}<span @click="remove($index)">    X</span></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				todoNewTxt:'',
+				todos:[
+					'do fish',
+					'paly games'
+				]
+			},
+			methods:{
+				remove:function(index){
+					this.todos.splice(index,1);
+				},
+				addTodo:function(){
+					this.todos.push(this.todoNewTxt);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

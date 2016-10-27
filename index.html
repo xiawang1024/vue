@@ -3,9 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title>vue</title>
+    <script type="text/javascript" src="vue.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+    	<input type="" name="" v-model="msg">
+    	<p v-text="msg | uppercase"></p>
+    </div>
     <!-- built files will be auto injected -->
+    <script type="text/javascript">
+    	var vm=new Vue({
+    		el:"#app",
+    		data:{
+    			msg:''
+    		}
+    	});
+    	vm.filter('reverse',function(value){
+    		return value.split('').reverse().join('');
+    	})
+    </script>
   </body>
 </html>

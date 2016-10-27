@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<input type="text" v-model="num" @keyup.13="add">
+		<p v-for="n of evenNumbers" v-text="n"></p>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				num:'',
+				numbers:[1,2,3,4,5,6,7,8,9]
+			},
+			computed:{//计算的属性，如果有变化就执行
+				evenNumbers:function(){
+					return this.numbers.filter(function(item){
+						return item%2==0
+					})
+				}
+			},
+			methods:{
+				add:function(){
+					this.numbers.push(+this.num);
+				}
+			}
+		});
+	</script>
+</body>
+</html>

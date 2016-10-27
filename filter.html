@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<button @click="sortBy('id')">排序</button>
+		<ul>
+			<li v-for="book of books | orderBy 'price' " v-text="book.price"></li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				user:{
+					name:"王侠",
+					last:"龚炎炎",
+					full:"王沐阳"
+				},
+				books:[
+				{
+					id:1,
+					name:'红楼梦',
+					author:'曹雪芹',
+					price:'32.0'
+				},
+				{
+					id:2,
+					name:'水浒传',
+					author:'施耐庵',
+					price:'30.0'
+				},
+				{
+					id:3,
+					name:'三国演义',
+					author:'罗贯中',
+					price:'24.0'
+				},
+				{
+					id:4,
+					name:'西游记',
+					author:'吴承恩',
+					price:'20.0'
+				}
+				],
+				sort:''
+			},
+			methods:{
+				sortBy:function(sort){
+					this.sort=sort;
+					console.log(this.sort);
+				}	
+			}
+		});
+	</script>
+</body>
+</html>

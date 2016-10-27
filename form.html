@@ -11,15 +11,50 @@
 			<p v-text="msg"></p>
 		</div>
 		<div>
-			
+			<textarea v-model="message"></textarea>
+			<p v-text="message"></p>
 		</div>
+		<div>
+			<input type="checkbox" name="" v-model="checked">
+			<label>单个复选框</label>
+			<p ><span v-text="checked"></span> 逻辑值 </p>
+		</div>
+		<div>
+			<p>多个复选框，数组</p>
+			<input type="checkbox" value="wx" v-model="names"><label>wx</label>
+			<input type="checkbox" value="gyy" v-model="names"><label>gyy</label>
+			<input type="checkbox" value="wmy" v-model="names"><label>wmy</label>
+			<ul>checked names:
+				<li v-for="name of names" v-text="name"></li>
+			</ul>
+		</div>
+		<div>
+			<p>单选</p>
+			<input type="radio" value="男" name="sex" v-model="sex"><label>男</label>
+			<input type="radio" value="女" name="sex" v-model="sex"><label>女</label>
+			<p>性别：<span v-text="sex"></span></p>
+		</div>
+		<input
+		type="checkbox"
+		v-model="toggle"
+		v-bind:true-value="a"
+		v-bind:false-value="b">
+		<p v-text="toggle"></p>
+		<p>修饰符：</p>
+		<p>.lazy(在change而不是input事件中更新)</p>
+		<p>.number(自动将用户输入的值转为number类型)</p>
+		<p>.trim(过滤首尾空格)</p>
 	</form>
 	<script type="text/javascript" src="vue.js"></script>
 	<script type="text/javascript">
 		var vm=new Vue({
 			el:"#app",
 			data:{
-				msg:""
+				msg:"",
+				message:'',
+				checked:false,
+				names:[],
+				toggle:''
 			}
 		});
 	</script>
