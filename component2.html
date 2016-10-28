@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<my-component></my-component>
+		<br>
+		<p><input type="text" v-model="hellos"></p>
+		<child :my-msg="1"></child>
+		<br>
+		<div>
+			<input type="text" v-model.number="msg">
+			<yanzheng :prop-a="msg"></yanzheng>
+		</div>
+	</div>
+	<script type="text/javascript">
+	Vue.component("my-component",{
+		template:'<div @click="count++">{{count}}</div>',
+		data:function(){
+			return {
+				count:0
+			}
+		}
+	});
+	Vue.component("child",{
+		props:['myMsg'],
+		template:'<span>{{myMsg+2}}</span>'//字面量  动态语法传值的不同，字面量传的是字符串，动态传值是实际的值，如果去掉：号，就是字符串的拼接
+	});
+	Vue.component("yanzheng",{
+		props:{
+			propA:Number,
+			propB:[String,Number],
+			propC:{
+				type:String,
+				required: true
+			},
+			propD:{
+				type:Number,
+				default:100
+			},
+			propE:{
+				type:Object,
+				default:function(){
+					return {
+						message:'hello'
+					}
+				}
+			}
+		},
+		template:'<div>{{propA}}</div>'
+	})
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				hellos:'',
+				msg:100
+			}
+		});
+	</script>
+</body>
+</html>
