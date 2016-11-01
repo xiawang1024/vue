@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="my-component">
+		<my-component></my-component>
+		<br>
+		<p><input type="text" v-model="text"></p>
+		<child :message="text"></child>
+	</div>
+	<script type="text/javascript">
+		Vue.component('my-component',{
+			template:'<div @click="add">\
+						{{conunt}}\
+						<ul>\
+						<li v-for="item of items" v-text="item" :key=item.id></li>\
+						</ul>\
+					  </div>',
+			data:function(){
+				return{
+					msg:'hell',
+					conunt:0,
+					items:{
+						text:1,
+						tex:2,
+						tet:3
+					}
+				}
+			},
+			methods:{
+				add:function(){
+					this.conunt++;
+				}
+			}
+		});
+		Vue.component("child",{
+			template:'<span>{{message}}</span>',
+			props:['message']
+		});
+		var vm=new Vue({
+			el:"#my-component",
+			data:{
+				text:''
+			}
+		});
+	</script>
+</body>
+</html>

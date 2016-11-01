@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<example></example>
+		<my-component></my-component>
+	</div>
+	<script type="text/javascript">
+		Vue.component("example",{
+			template:"<div @click='updated'>{{msg1}}</div>",
+			data:function(){
+				return {
+					msg1:"not updated"
+				}
+			},
+			methods:{
+				updated:function(){
+					this.msg="updated";
+					console.log(this.$el.textContent);
+					this.$nextTick(function(){
+						console.log(this.$el.textContent)
+					})
+				}
+			}
+		});
+		Vue.component("my-component",{
+			template:"<div>nihao </div>"
+		})
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    message: '123'
+		  }
+		})
+		vm.message = 'new message' // 更改数据
+		vm.$el.textContent === 'new message' // false
+		Vue.nextTick(function () {
+		  vm.$el.textContent === 'new message' // true
+		})
+	</script>
+</body>
+</html>

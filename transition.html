@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+	<style type="text/css">
+		.fade-enter-acitve,.fade-leave-active{
+			transition: opacity .5s
+		}
+		.fade-enter,.fade-leave-active{
+			opacity: 0
+		}
+		.bounce-enter-active {
+			animation: bounce-in .5s;
+		}
+		.bounce-leave-active {
+			animation: bounce-out .5s;
+		}
+		@keyframes bounce-in {
+			0% {
+				transform: scale(0);
+			}
+			50% {
+				transform: scale(1.5);
+			}
+			100% {
+				transform: scale(1);
+			}
+		}
+		@keyframes bounce-out {
+			0% {
+				transform: scale(1);
+			}
+			50% {
+				transform: scale(1.5);
+			}
+			100% {
+				transform: scale(0);
+			}
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<button @click="show=!show">Toggle</button>
+		<transition name="bounce">
+			<p v-if="show">Hello World</p>
+		</transition>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				show:true
+			}
+		});
+	</script>
+</body>
+</html>

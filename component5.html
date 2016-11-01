@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<p>{{total}}</p>
+		<div>
+			<child @dianji="addTotal"></child>
+			<child @dianji="addTotal"></child>
+		</div>
+		<div>
+			<p>{{message}}</p>
+			<my-input label="Message" v-model="message">
+				<p>插入</p>
+			</my-input>
+		</div>
+	</div>
+	<script type="text/javascript">
+		Vue.component("child",{
+			template:'<button @click="add">{{count}}</button>',
+			data:function(){
+				return {
+					count:0
+				}
+			},
+			methods:{
+				add:function(){
+					this.count++;
+					this.$emit('dianji');
+				}
+			}
+		});
+		Vue.component("my-input",{
+			template:'\
+				<div>\
+				<label>{{label}}:</label>\
+				<input type="text" v-bind:value="value" v-on:input="onInput" /><slot>回退内容</slot>\
+				</div>',
+			props:['label','value'],
+			data:function(){
+				return {
+
+				}
+			},
+			methods:{
+				onInput:function(event){
+					this.$emit('input',event.target.value);
+				}
+			}
+		});
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				total:0,
+				message:'hello'
+			},
+			methods:{
+				addTotal:function(){
+					this.total++;
+				}
+			}
+		});
+	</script>
+</body>
+</html>
