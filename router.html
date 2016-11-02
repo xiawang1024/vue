@@ -3,12 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style type="text/css">
+		.router-link-active{
+			color: red;
+		}
+	</style>
 </head>
 <body>
 	<div id="app">
 		<h1>Hello App!</h1>
 		<p>
-			<router-link to="/user/foo">/user/foo</router-link>
+			<router-link to="/user/foo" exact>/user/foo</router-link>
 			<router-link to="/user/foo/profile">/user/foo/profile</router-link>
 			<router-link to="/user/foo/posts">/user/foo/posts</router-link>
 		</p>
@@ -33,7 +38,7 @@
 			template:'<div><h2>User {{$route.params.id}}</h2><router-view></router-view></div>',
 			watch:{
 				'$route' (to, from){
-					console.log(to.fullPath);
+					console.log(to.path.split('/').length);
 				}
 			}
 		}
