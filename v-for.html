@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+
 	<script type="text/javascript" src="vue.js"></script>
 	<style type="text/css">
 		span{
@@ -11,34 +12,44 @@
 			margin-left: 8px;
 			cursor: pointer;
 		}
+		.finished{
+			text-decoration: line-through;
+		}
 	</style>
 </head>
 <body>
 	<div id="app">
 		<input type="text" v-model="todoNewTxt" placeholder="addTodo" @keyup.13="addTodo">
 		<ul>
-			<li v-for="todo of todos">{{todo}}<span @click="remove($index)">    X</span></li>
+			<li v-for="(todo,index) of todos" :class="{finished:isFinished}">{{todo}}<span @click="remove(index,$event)">    X</span></li>
 		</ul>
 	</div>
+	<script src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js">
+	</script>
 	<script type="text/javascript">
-		var vm=new Vue({
-			el:"#app",
-			data:{
-				todoNewTxt:'',
-				todos:[
+		$(function(){
+			var vm=new Vue({
+				el:"#app",
+				data:{
+					todoNewTxt:'',
+					todos:[
 					'do fish',
 					'paly games'
-				]
-			},
-			methods:{
-				remove:function(index){
-					this.todos.splice(index,1);
+					],
+					isFinished:false
 				},
-				addTodo:function(){
-					this.todos.push(this.todoNewTxt);
+				methods:{
+					remove:function(index,event){
+					let el=$(event.currentTarget).parent();
+					el.addClass('finished').siblings().removeClass("finished")
+					},
+					addTodo:function(){
+						this.todos.push(this.todoNewTxt);
+						this.todoNewTxt=''
+					}
 				}
-			}
-		});
+			});
+		})
 	</script>
 </body>
 </html>
