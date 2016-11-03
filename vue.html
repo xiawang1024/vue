@@ -77,12 +77,13 @@
 			components:{
 				'my-component-child':{
 					template:'<ul><li v-for="data of someData">{{data.provider}}</li></ul>',
-					props:['someData']
+					props:['someData'],
+
 				}
 			},
 			methods:{getData:function(){
 				this.$http.get('http://study.163.com/webDev/hotcouresByCategory.htm').then(function(response){
-					console.log(JSON.parse(response.body));
+					console.log(response.json());
 					this.$set(this.$data,'someData',JSON.parse(response.body));
 				},function(response){
 					console.log(response.status)
