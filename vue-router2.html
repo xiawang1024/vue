@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue-router2</title>
+	<style type="text/css">
+		body{
+			font:40px "Microsoft Yahei";
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- <home></home>
+		<about></about> -->
+		<ul>
+			<li><router-link to="/home">Home</router-link></li>
+			<li><router-link to="/about">About</router-link></li>
+		</ul>
+		<router-view></router-view>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="vue-router.js"></script>
+	<script type="text/javascript">
+		var Home=Vue.extend({
+			template:'<div><h1>Home</h1><p>{{msg}}</p></div>',
+			data:function(){
+				return {
+					msg:"Hello ,vue router!"
+				}
+			}
+		})
+
+		var About = Vue.extend({
+			template: '<div><h1>About</h1><p>This is the tutorial about vue-router.</p></div>'
+		})
+		// Vue.use(VueRouter)
+		var  routes=[
+		{path:'/home', component:Home},
+		{path:'/about', component:About}
+		]
+		var router=new VueRouter({
+			routes:routes
+		})
+		var vm=new Vue({
+			el:'#app',
+			router,
+			components:{
+				Home, About
+			}
+		})
+	</script>
+</body>
+</html>
