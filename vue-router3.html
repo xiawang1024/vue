@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		/*h1{
+			font-size: 40px;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="app">
+		<h1>Home</h1>
+		<p>
+			<!-- <router-link to="/user/foo">Go to Foo</router-link>
+			<router-link to="/user/bar">Go to Bar</router-link> -->
+			<router-link to="/user/foo">/user/foo</router-link>
+			<router-link to="/user/foo/profile">/user/foo/profile</router-link>
+			<router-link to="/user/foo/posts">/user/foo/posts</router-link>
+		</p>
+		<p><button @click="go">posts</button></p>
+		<router-view></router-view>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="vue-router.js"></script>
+	<script type="text/javascript">
+		const Bar={template:'<h1>welcom to Bar</h1>'}
+		const Foo={template:'<h1>welcom to Foo</h1>'}
+		const User={
+			template:'<div><div>{{$route.params.id}}</div><router-view></router-view></div>'
+		}
+		const UserProfile = { template: '<div>Profile</div>' }
+		const UserPosts = { template: '<div>Posts</div>' }
+		const routes=[
+			// {path:'/foo',component:Foo},
+			// {path:'/bar',component:Bar},
+			{path:'/user/:id',component:User,
+			children:[
+			{path:'profile',component:UserProfile},
+			{path:'posts',component:UserPosts}
+			]
+		}
+		]
+		const router=new VueRouter({
+			routes
+		})
+		var vm=new Vue({
+			el:"#app",
+			router,
+			watch:{
+				'$route'(to,from){
+					console.log(to.params);
+				}
+			},
+			methods:{
+				go:function(){
+					router.push({path:'/user/foo/posts'})
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>
