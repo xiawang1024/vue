@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="app">
+		<p><input type="text" v-model="sch"><button @click="getDate">getDate</button></p>
+		<ul>
+			<h2>搜索结果：</h2>
+			<li v-for="list of myData" >{{list}}</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				myData:["sehng","wx"],
+				sch:''
+			},
+			methods:{
+				getDate:function(){ //jsonp使用方法，另参数使用方法
+					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{params:{wd:this.sch},jsonp:'cb'}).then(function(res){
+						alert(res.body.s);
+						console.log(res);
+						this.myData=res.body.s
+					},function(){
+
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>
