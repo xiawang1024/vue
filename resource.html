@@ -22,13 +22,12 @@
 				sch:''
 			},
 			methods:{
-				getDate:function(){ //jsonp使用方法，另参数使用方法
+				getDate:function(){ //jsonp使用方法，另参数使用方法  params(查询参数)为固定key
 					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{params:{wd:this.sch},jsonp:'cb'}).then(function(res){
 						alert(res.body.s);
 						console.log(res);
 						this.myData=res.body.s
 					},function(){
-
 					})
 				}
 			}
