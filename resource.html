@@ -9,7 +9,7 @@
 		<p><input type="text" v-model="sch"><button @click="getDate">getDate</button></p>
 		<ul>
 			<h2>搜索结果：</h2>
-			<li v-for="list of myData" >{{list}}</li>
+			<li v-for="list of myData" v-text="list"></li>
 		</ul>
 	</div>
 	<script type="text/javascript" src="vue.js"></script>
@@ -18,17 +18,18 @@
 		var vm=new Vue({
 			el:"#app",
 			data:{
-				myData:["sehng","wx"],
+				myData:[],
 				sch:''
 			},
 			methods:{
-				getDate:function(){ //jsonp使用方法，另参数使用方法  params(查询参数)为固定key
-					this.$http.jsonp('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su',{params:{wd:this.sch},jsonp:'cb'}).then(function(res){
-						alert(res.body.s);
-						console.log(res);
-						this.myData=res.body.s
-					},function(){
-					})
+				getDate:function(){
+						this.$http.jsonp('https://sug.so.360.cn/suggest',{
+								word:'s'
+						}).then(function(res){
+								console.log(res.data.s);
+						},function(){
+
+						})
 				}
 			}
 		})
