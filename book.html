@@ -6,7 +6,9 @@
 	<link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
 	<style type="text/css">
 		.panel-body th{
 			cursor: pointer;
@@ -25,7 +27,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="book of books | orderBy sortKey">
+						<tr v-for="book of orderBooks">
 							<td v-text="book.id"></td>
 							<td v-text="book.name"></td>
 							<td v-text="book.author"></td>
@@ -66,6 +68,11 @@
 			<span v-for='item of book'></span>
 		</p>
 	</div>
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js"></script>
 	<script type="text/javascript">
 		var vm=new Vue({
 			el:"#book",
@@ -110,7 +117,8 @@
 				}
 				],
 				sortKey:"",//排序关键字
-				sum:0//总价
+				sum:0,//总价
+				orderBooks:[]
 			},
 			methods:{
 				addBook:function(){
@@ -131,6 +139,7 @@
 				},
 				sortBy:function(sortKey){
 					this.sortKey=sortKey;
+					//console.log(sortKey);
 				}
 			},
 			computed:{
@@ -141,6 +150,9 @@
 						result+=Number(this.books[i].price);
 					}
 					return result;
+				},
+				orderBooks:function(){
+					return _.orderBy(this.books,this.sortKey)
 				}
 			}
 		});
