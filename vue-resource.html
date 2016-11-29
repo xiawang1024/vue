@@ -6,19 +6,36 @@
 </head>
 <body>
 <div id="app">
-    <button @click="getData">getData</button>
-    <ul>
-        <li v-for="list of lists" v-text="list.name"></li>
-    </ul>
+    <div>
+        <p><label for="username">用户名:<input type="text" id="username" v-model="user"></label></p>
+        <p><label for="password">密码:<input type="text" id="password" v-model="pass"></label></p>
+        <p><button @click="login">登陆</button></p>
+        <p>测试账号：studyOnline  密码：study.163.com</p>
+        <p v-if="">{{msg}}</p>
+    </div>
+    <hr>
+    <div>
+        <button @click="getData">获取数据</button>
+        <ul>
+            <li v-for="list of lists" v-text="list.name"></li>
+        </ul>
+    </div>
 </div>
 <script src="vue.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+<script src="md5.js"></script>
 <script>
+    Vue.http.options.emulateJSON = true;
+    Vue.http.options.emulateHTTP = true;
     var vm=new Vue({
         el:"#app",
         data:{
             lists:[],
-            name:"wx"
+            name:"wx",
+            loginInfo:{},
+            user:'',
+            pass:'',
+            msg:''
         },
         methods:{
             getData:function () {
@@ -28,18 +45,38 @@
             },(response) =>{
                     //error callback
                 })
+            },
+            login:function () {
+                this.user=hex_md5(this.user);
+                this.pass=hex_md5(this.pass);
+                this.loginInfo.userName=this.user;
+                this.loginInfo.password=this.pass;
+                this.user='';
+                this.pass='';
+                this.$http.get('http://study.163.com/webDev/login.htm ',{params:this.loginInfo}).then(function (response) {  //深坑：params  固定字段
+                    //登陆成功
+                    console.log(response);
+                    if(response.body==1){
+                        this.msg="登陆成功！"
+                    }else{
+                        this.msg="登陆失败！"
+                    }
+                },function () {
+                    //登陆失败
+                    console.log("cuowu")
+                })
+                
             }
         },
-        mounted: function () {
-            this.$nextTick(function () {
-                // code that assumes this.$el is in-document
-                // 这里就可以保证 this.$el 已经插入到文档了
-                this.getData();
-            })
-        }
+//        mounted: function () {
+//            this.$nextTick(function () {
+//                // code that assumes this.$el is in-document
+//                // 这里就可以保证 this.$el 已经插入到文档了
+//                this.getData();
+//            })
+//        },
         
     })
-
 </script>
 </body>
 </html>
