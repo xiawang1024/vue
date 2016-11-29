@@ -17,7 +17,7 @@
     <div>
         <button @click="getData">获取数据</button>
         <ul>
-            <li v-for="list of lists" v-text="list.name"></li>
+            <li v-for="list of lists" v-text="list.text"></li>
         </ul>
     </div>
 </div>
@@ -39,9 +39,13 @@
         },
         methods:{
             getData:function () {
-                this.$http.get('http://study.163.com/webDev/hotcouresByCategory.htm').then((response) => {
+                this.$http.get('http://rap.taobao.org/mockjsdata/10826/sell.json').then((response) => {
                     //success callback
-                    this.lists=JSON.parse(response.body);
+                    // console.log(response);
+                    // console.log(response.body.goods);
+                    // var jsonData=JSON.parse(response.body);
+                    // console.log(jsonData);
+                    this.lists=response.body.ratings;
             },(response) =>{
                     //error callback
                 })
