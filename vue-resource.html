@@ -39,7 +39,7 @@
         },
         methods:{
             getData:function () {
-                this.$http.get('http://rap.taobao.org/mockjsdata/10826/sell.json').then((response) => {
+                this.$http.get('http://rap.taobao.org/mockjsdata/10826/sell.json',{params:{id:2}}).then((response) => {
                     //success callback
                     // console.log(response);
                     // console.log(response.body.goods);
