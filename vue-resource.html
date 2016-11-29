@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-resource</title>
+</head>
+<body>
+<div id="app">
+    <button @click="getData">getData</button>
+    <ul>
+        <li v-for="list of lists" v-text="list.name"></li>
+    </ul>
+</div>
+<script src="vue.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+<script>
+    var vm=new Vue({
+        el:"#app",
+        data:{
+            lists:[],
+            name:"wx"
+        },
+        methods:{
+            getData:function () {
+                this.$http.get('http://study.163.com/webDev/hotcouresByCategory.htm').then((response) => {
+                    //success callback
+                    this.lists=JSON.parse(response.body);
+            },(response) =>{
+                    //error callback
+                })
+            }
+        },
+        mounted: function () {
+            this.$nextTick(function () {
+                // code that assumes this.$el is in-document
+                // 这里就可以保证 this.$el 已经插入到文档了
+                this.getData();
+            })
+        }
+        
+    })
+
+</script>
+</body>
+</html>
