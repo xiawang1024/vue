@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>axios</title>
+</head>
+<body>
+	<div id="axios">
+		<input type="text" ><button @click="get">搜索</button>
+		<ul>
+			<li v-if="lessonLists" v-for="list of lessonLists">{{list.name}}</li>
+		</ul>
+	</div>
+	<script type="text/javascript" src="vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		var　vm=new Vue({
+			el:"#axios",
+			data:{
+				lessonLists:[]
+			},
+			methods:{
+				get:function(){
+					axios.get('https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?cb=j',{
+						params:{
+							wd:'a'
+						}
+					}).then(function(response){
+						alert(response);
+						// vm.$nextTick(function(){
+						// 	this.lessonLists=response.data.result;
+						// })					
+					})
+				}
+			}
+		})
+	</script>
+</body>
+</html>
+
+
+https://sug.so.360.cn/suggest?callback=suggest_so&encodein=utf-8&encodeout=utf-8&format=json&word=a
+
+
+https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=s&cb=j
